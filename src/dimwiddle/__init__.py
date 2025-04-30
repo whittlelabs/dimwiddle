@@ -5,7 +5,10 @@ This package provides a clean, YAML-based dependency injection container
 inspired by the Symfony Framework.
 """
 
-__version__ = "0.1.0"
+try:
+    from ._version import __version__
+except ImportError:
+    __version__ = "0.0.0"  # Fallback version when not installed from package
 
 # Import commonly used classes for easier access
 from dimwiddle.domain.container import Container
