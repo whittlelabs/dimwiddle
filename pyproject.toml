@@ -7,7 +7,7 @@ name = "dimwiddle"
 description = "A lightweight dependency injection framework inspired by Symfony"
 readme = "README.md"
 requires-python = ">=3.8"
-license = "MIT"
+license = {text = "MIT"}
 authors = [
     {name = "Dimwiddle Contributors", email = "example@example.com"}
 ]
