@@ -41,3 +41,5 @@ Thumbs.db
 # Local development configuration
 .local/
 local_settings.py
+
+src/dimwiddle/_version.py

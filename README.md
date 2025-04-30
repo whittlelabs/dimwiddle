@@ -20,7 +20,7 @@ pip install dimwiddle
 Or install from the repository:
 
 ```bash
-git clone https://github.com/example/dimwiddle.git
+git clone https://github.com/whittlelabs/dimwiddle.git
 cd dimwiddle
 pip install -e .
 ```

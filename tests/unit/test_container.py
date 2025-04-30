@@ -9,7 +9,7 @@ from dimwiddle.infrastructure.config import DictConfig
 
 
 # Simple test classes for DI container tests
-class TestService:
+class SampleService:
     def __init__(self, message: str = "Hello"):
         self.message = message
     
@@ -17,9 +17,9 @@ class TestService:
         return self.message
 
 
-class TestServiceFactory:
-    def create(self, message: str) -> TestService:
-        return TestService(message)
+class ServiceFactory:
+    def create(self, message: str) -> SampleService:
+        return SampleService(message)
 
 
 class ContainerTest(unittest.TestCase):
@@ -27,7 +27,7 @@ class ContainerTest(unittest.TestCase):
         # Create service definitions manually
         definitions = {
             "test_service": ServiceDefinition(
-                cls=TestService,
+                cls=SampleService,
                 pos_args=["Hello, World!"]
             )
         }
@@ -39,7 +39,7 @@ class ContainerTest(unittest.TestCase):
         service = container.get("test_service")
         
         # Assertions
-        self.assertIsInstance(service, TestService)
+        self.assertIsInstance(service, SampleService)
         self.assertEqual(service.get_message(), "Hello, World!")
         
     def test_service_with_dependency(self):
@@ -50,7 +50,7 @@ class ContainerTest(unittest.TestCase):
                 pos_args=["Dependency Injection Works!"]
             ),
             "test_service": ServiceDefinition(
-                cls=TestService,
+                cls=SampleService,
                 pos_args=["@message"]
             )
         }
@@ -62,14 +62,14 @@ class ContainerTest(unittest.TestCase):
         service = container.get("test_service")
         
         # Assertions
-        self.assertIsInstance(service, TestService)
+        self.assertIsInstance(service, SampleService)
         self.assertEqual(service.get_message(), "Dependency Injection Works!")
         
     def test_service_with_factory(self):
         # Create service definitions with a factory
         definitions = {
             "factory": ServiceDefinition(
-                cls=TestServiceFactory
+                cls=ServiceFactory
             ),
             "test_service": ServiceDefinition(
                 factory=["@factory", "create"],
@@ -84,7 +84,7 @@ class ContainerTest(unittest.TestCase):
         service = container.get("test_service")
         
         # Assertions
-        self.assertIsInstance(service, TestService)
+        self.assertIsInstance(service, SampleService)
         self.assertEqual(service.get_message(), "Factory Created Service")
         
     def test_service_with_config(self):
@@ -96,7 +96,7 @@ class ContainerTest(unittest.TestCase):
         # Create service definitions with config reference
         definitions = {
             "test_service": ServiceDefinition(
-                cls=TestService,
+                cls=SampleService,
                 pos_args=["%MESSAGE%"]
             )
         }
@@ -108,7 +108,7 @@ class ContainerTest(unittest.TestCase):
         service = container.get("test_service")
         
         # Assertions
-        self.assertIsInstance(service, TestService)
+        self.assertIsInstance(service, SampleService)
         self.assertEqual(service.get_message(), "Config Works!")
         
     def test_tagged_services(self):
@@ -116,13 +116,13 @@ class ContainerTest(unittest.TestCase):
         test_yaml_content = """
 services:
   test_service_1:
-    class: tests.unit.test_container.TestService
+    class: tests.unit.test_container.SampleService
     arguments: ["Service 1"]
     tags:
       - { name: test_tag, alias: service1 }
       
   test_service_2:
-    class: tests.unit.test_container.TestService
+    class: tests.unit.test_container.SampleService
     arguments: ["Service 2"]
     tags:
       - { name: test_tag, alias: service2 }
