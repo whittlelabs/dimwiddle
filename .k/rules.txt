@@ -1,6 +1,0 @@
-This is a dependency injection library called "dimwiddle" which is inspired by the Symfony Framework.
-
-- Write production-ready code.
-- Follow PEP8 guidelines.
-- Apply SOLID and Open/Closed principles.
-- Use Clean Architecture (Robert Martin)

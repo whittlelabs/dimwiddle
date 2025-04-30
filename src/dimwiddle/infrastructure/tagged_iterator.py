@@ -1,4 +1,3 @@
-# tagged_iterator.py
 import yaml
 
 class TaggedIterator:
@@ -19,5 +18,12 @@ def tagged_iterator_constructor(loader, node):
     mapping = loader.construct_mapping(node, deep=True)
     return TaggedIterator(tag=mapping["tag"], index_by=mapping["index_by"])
 
-# Register the constructor globally or in a dedicated YAML loader
+def register_tagged_iterator():
+    """
+    Register the tagged_iterator constructor with the YAML SafeLoader.
+    This is automatically called when the package is imported.
+    """
+    yaml.SafeLoader.add_constructor('!tagged_iterator', tagged_iterator_constructor)
+
+# Keep this for backward compatibility but use register_tagged_iterator() for new code
 yaml.SafeLoader.add_constructor('!tagged_iterator', tagged_iterator_constructor)
